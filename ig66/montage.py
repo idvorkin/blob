@@ -66,11 +66,10 @@ def compute_length_tobuild(count):
 def make():
     ic(subprocess.run("rm montage.jpg", shell=True).stdout)
     files = [f for f in listdir(path) if isfile(join(path, f))]
-
     count_files = len(files)
-    ic(subprocess.run("rm montage.jpg", shell=True).stdout)
     horizontal_tiles = compute_length(len(files))
     rows = len(files) // horizontal_tiles
+
     ic (len(files), horizontal_tiles, rows)
     montage_cmd = f"montage -auto-orient -limit memory 999MB -geometry 512x512 -tile {horizontal_tiles}x * montage.jpg"
     ic(subprocess.run(montage_cmd, shell=True).stdout)
