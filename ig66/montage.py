@@ -2,7 +2,9 @@
 # probably skip montage, or recreate it afterwards.
 
 from os import listdir
+from typing import List
 from os.path import isfile, join
+from pathlib import Path
 from icecream import ic
 import subprocess
 import typer
@@ -63,15 +65,17 @@ def compute_length_tobuild(count):
 
 
 @app.command()
-def make():
+def make(files: List[Path]=typer.Argument(None)):
     ic(subprocess.run("rm montage.jpg", shell=True).stdout)
-    files = [f for f in listdir(path) if isfile(join(path, f))]
+    if files == None or files == []:
+        files = [f for f in listdir(path) if isfile(join(path, f))]
     count_files = len(files)
     horizontal_tiles = compute_length(len(files))
     rows = len(files) // horizontal_tiles
 
     ic (len(files), horizontal_tiles, rows)
-    montage_cmd = f"montage -auto-orient -limit memory 999MB -geometry 512x512 -tile {horizontal_tiles}x * montage.jpg"
+    montage_cmd = f"montage -auto-orient -limit memory 999MB  -tile {horizontal_tiles}x {' '.join([str(f) for f in files]) } -geometry 512x512 montage.jpg"
+    ic(montage_cmd)
     ic(subprocess.run(montage_cmd, shell=True).stdout)
 
 @logger.catch
