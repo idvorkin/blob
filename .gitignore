@@ -1,2 +1,8 @@
 
 **/.DS_store
+
+#Ignore vim junk
+*.swp
+*.swo
+*~
+tags

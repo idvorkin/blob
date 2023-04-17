@@ -17,8 +17,10 @@ for f in files:
         continue # skip montage in shrinking.
 
     info_command = f"identify {f}"
+    # Web sucks with HEIC, so convert them.
+    f_out = f.replace("HEIC","jpg")
     ic(subprocess.run(info_command, shell=True).stdout)
-    resize_command = f"""convert {f} -resize {new_size}\> {f}"""
+    resize_command = f"""convert {f} -resize {new_size}\> {f_out}"""
     ic(resize_command)
     o = subprocess.run(resize_command, shell=True)
     print (o.stdout)
