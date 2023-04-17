@@ -4,5 +4,6 @@
 #Ignore vim junk
 *.swp
 *.swo
+*.swn
 *~
 tags
