@@ -66,7 +66,7 @@ def compute_length_tobuild(count):
 
 @app.command()
 def make(files: List[Path]=typer.Argument(None)):
-    ic(subprocess.run("rm montage.jpg", shell=True).stdout)
+    ic(subprocess.run("rm montage.webp", shell=True).stdout)
     if files == None or files == []:
         files = [f for f in listdir(path) if isfile(join(path, f))]
     count_files = len(files)
@@ -74,7 +74,7 @@ def make(files: List[Path]=typer.Argument(None)):
     rows = len(files) // horizontal_tiles
 
     ic (len(files), horizontal_tiles, rows)
-    montage_cmd = f"montage -auto-orient -limit memory 999MB  -tile {horizontal_tiles}x {' '.join([str(f) for f in files]) } -geometry 512x512 montage.jpg"
+    montage_cmd = f"montage -auto-orient -limit memory 999MB  -tile {horizontal_tiles}x {' '.join([str(f) for f in files]) } -geometry 512x512 montage.webp"
     ic(montage_cmd)
     ic(subprocess.run(montage_cmd, shell=True).stdout)
 
